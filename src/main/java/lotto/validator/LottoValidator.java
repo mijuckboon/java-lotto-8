@@ -50,12 +50,12 @@ public class LottoValidator {
 
     private static Integer findInvalidNumber(List<Integer> numbers) {
         return numbers.stream()
-                .filter(number -> isInvalidNumber(number))
+                .filter(number -> hasInvalidRange(number))
                 .findFirst()
                 .orElse(null);
     }
 
-    private static boolean isInvalidNumber(int number) {
+    private static boolean hasInvalidRange(int number) {
         return number < LottoPolicy.MIN_NUMBER || number > LottoPolicy.MAX_NUMBER;
     }
 }

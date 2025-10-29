@@ -32,7 +32,12 @@ public class LottoPublisher {
 
     private Lotto publishLotto() {
         List<Integer> numbers = pickLottoNumbers();
-        return new Lotto(numbers);
+        List<Integer> sortedNumbers = sorted(numbers);
+        return new Lotto(sortedNumbers);
+    }
+
+    private List<Integer> sorted(List<Integer> numbers) {
+        return numbers.stream().sorted().toList();
     }
 
     private List<Integer> pickLottoNumbers() {
