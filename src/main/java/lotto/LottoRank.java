@@ -20,4 +20,19 @@ public enum LottoRank {
         this.matchBonusCount = matchBonusCount;
     }
 
+    public int getRank() {
+        return rank;
+    }
+
+    public long getPrize() {
+        return prize;
+    }
+
+    public int getMatchCount() {
+        return matchCount;
+    }
+
+    public int getMatchBonusCount() {
+        return matchBonusCount;
+    }
 }

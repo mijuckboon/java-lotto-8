@@ -1,39 +1,39 @@
 package lotto;
 
-import camp.nextstep.edu.missionutils.Console;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import lotto.validator.BonusNumberValidator;
 import lotto.validator.LottoValidator;
+import lotto.view.InputView;
+import lotto.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        System.out.println("구입금액을 입력해 주세요.");
-        String paymentInput = Console.readLine();
+        OutputView.printPaymentInputMessage();
+        String paymentInput = InputView.receivePaymentInput();
         LottoPublisher lottoPublisher = new LottoPublisher();
         List<Lotto> lottos = lottoPublisher.publishLottos(paymentInput);
-        System.out.println("%d개를 구매했습니다.".formatted(lottos.size()));
-        for (Lotto lotto : lottos) {
-            System.out.println(lotto.getNumbers());
-        }
-        System.out.println("당첨 번호를 입력해 주세요.");
-        String numbersInput = Console.readLine();
-        List<Integer> winningNumbers = Arrays.stream(numbersInput.split(",")).map(Integer::parseInt).toList();
+        OutputView.printLottosOutputMessage(lottos);
+
+        OutputView.printWinningNumbersInputMessage();
+        String winningNumbersInput = InputView.receiveWinningNumbersInput();
+        List<Integer> winningNumbers = Arrays.stream(winningNumbersInput.split(",")).map(Integer::parseInt).toList();
         LottoValidator.validate(winningNumbers);
         Lotto winningLotto = new Lotto(winningNumbers);
 
-        System.out.println("보너스 번호를 입력해 주세요.");
-        String bonusNumberInput = Console.readLine();
-        BonusNumberValidator.validateBonusNumber(Integer.parseInt(bonusNumberInput), winningLotto);
+        OutputView.printBonusNumberInputMessage();
+        String bonusNumberInput = InputView.receiveBonusNumberInput();
+        int bonusNumber = Integer.parseInt(bonusNumberInput);
+        BonusNumberValidator.validateBonusNumber(bonusNumber, winningLotto);
 
+        ResultComputer resultComputer = new ResultComputer(winningLotto, new BonusNumber(bonusNumber, winningLotto));
+        TotalResult totalResult = resultComputer.computeResult(lottos);
+        long payment = Long.parseLong(paymentInput);
+        OutputView.printFinalResultMessage(totalResult, payment);
     }
 
     /*
-    당첨 번호를 입력해 주세요.
-    1,2,3,4,5,6
-
-    보너스 번호를 입력해 주세요.
-    7
 
     당첨 통계
     ---

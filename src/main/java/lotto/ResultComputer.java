@@ -1,0 +1,38 @@
+package lotto;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ResultComputer {
+    private final Lotto winningLotto;
+    private final BonusNumber bonusNumber;
+
+    public ResultComputer(Lotto winningLotto, BonusNumber bonusNumber) {
+        this.winningLotto = winningLotto;
+        this.bonusNumber = bonusNumber;
+    }
+
+    public TotalResult computeResult(List<Lotto> lottos) {
+        List<LottoResult> results = new ArrayList<LottoResult>();
+        for (Lotto lotto : lottos) {
+            results.add(computeResult(lotto));
+        }
+        return new TotalResult(results);
+    }
+
+    private LottoResult computeResult(Lotto lotto) {
+        List<Integer> correctNumbers = lotto.getNumbers().stream().filter(
+                number -> winningLotto.getNumbers().contains(number)
+        ).toList();
+        int matchCount = correctNumbers.size();
+        int matchBonusCount = lotto.getNumbers().stream().filter(number -> number == bonusNumber.getNumber()).toList()
+                .size();
+
+        for (LottoRank rank : LottoRank.values()) {
+            if (rank.getMatchCount() == matchCount && rank.getMatchBonusCount() == matchBonusCount) {
+                return new LottoResult(rank);
+            }
+        }
+        return new LottoResult(null);
+    }
+}

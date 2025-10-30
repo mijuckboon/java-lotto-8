@@ -7,7 +7,6 @@ import lotto.exception.CustomException;
 import lotto.exception.ErrorMessage;
 
 public class LottoValidator {
-
     public static void validate(List<Integer> numbers) {
         validateNumberCount(numbers);
         validateDistinctness(numbers);
