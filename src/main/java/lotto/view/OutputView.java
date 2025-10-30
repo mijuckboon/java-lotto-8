@@ -42,9 +42,9 @@ public class OutputView {
         println(BONUS_NUMBER_INPUT_MESSAGE);
     }
 
-    public static void printFinalResultMessage(TotalResult totalResult, long payment) {
+    public static void printFinalResultMessage(TotalResult totalResult, int payment) {
         Map<LottoRank, Integer> ranks = totalResult.getRanks();
-        double rateOfReturn = totalResult.getRoundedRateOfReturn(payment);
+        double rateOfReturn = totalResult.getRateOfReturn(payment);
 
         String rankResultMessage = getRankResultMessage(ranks);
         String finalResultMessage = FINAL_RESULT_MESSAGE.formatted(rankResultMessage, rateOfReturn);
