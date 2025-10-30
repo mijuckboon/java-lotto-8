@@ -1,8 +1,10 @@
-package lotto;
+package lotto.service;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.List;
+import lotto.domain.Lotto;
+import lotto.domain.LottoPolicy;
 import lotto.validator.InputValidator;
 
 public class LottoPublisher {

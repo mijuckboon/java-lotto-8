@@ -2,7 +2,7 @@ package lotto.validator;
 
 import java.util.HashSet;
 import java.util.List;
-import lotto.LottoPolicy;
+import lotto.domain.LottoPolicy;
 import lotto.exception.CustomException;
 import lotto.exception.ErrorMessage;
 

@@ -3,9 +3,9 @@ package lotto.view;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import lotto.Lotto;
-import lotto.LottoRank;
-import lotto.TotalResult;
+import lotto.domain.Lotto;
+import lotto.domain.LottoRank;
+import lotto.domain.TotalResult;
 
 public class OutputView {
     private static final String PAYMENT_INPUT_MESSAGE = "구입금액을 입력해 주세요.";

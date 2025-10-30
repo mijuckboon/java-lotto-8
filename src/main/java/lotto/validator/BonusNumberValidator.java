@@ -1,7 +1,7 @@
 package lotto.validator;
 
-import lotto.Lotto;
-import lotto.LottoPolicy;
+import lotto.domain.Lotto;
+import lotto.domain.LottoPolicy;
 import lotto.exception.CustomException;
 import lotto.exception.ErrorMessage;
 

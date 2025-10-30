@@ -1,7 +1,12 @@
-package lotto;
+package lotto.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import lotto.domain.BonusNumber;
+import lotto.domain.Lotto;
+import lotto.domain.LottoRank;
+import lotto.domain.LottoResult;
+import lotto.domain.TotalResult;
 
 public class ResultComputer {
     private final Lotto winningLotto;

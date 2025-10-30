@@ -1,4 +1,4 @@
-package lotto;
+package lotto.domain;
 
 public class LottoPolicy {
     public static final int MIN_NUMBER = 1;
