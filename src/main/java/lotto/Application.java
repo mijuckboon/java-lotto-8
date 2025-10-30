@@ -14,38 +14,80 @@ import lotto.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
+        Application application = new Application();
+        application.run();
+    }
+
+    private void run() {
+        String paymentInput = getPaymentInput();
+        List<Lotto> lottos = publishLottos(paymentInput);
+
+        String winningNumbersInput = getWinningNumbersInput();
+        Lotto winningLotto = constructWinningLotto(winningNumbersInput);
+
+        String bonusNumberInput = getBonusNumberInput();
+        BonusNumber bonusNumber = getBonusNumber(bonusNumberInput, winningLotto);
+        ResultComputer resultComputer = constructResultComputer(winningLotto, bonusNumber);
+
+        TotalResult totalResult = getTotalResult(resultComputer, lottos);
+        int payment = parsePaymentInput(paymentInput);
+        printFinalResult(totalResult, payment);
+    }
+
+    private String getPaymentInput() {
         OutputView.printPaymentInputMessage();
-        String paymentInput = InputView.receivePaymentInput();
-        LottoPublisher lottoPublisher = new LottoPublisher();
-        List<Lotto> lottos = lottoPublisher.publishLottos(paymentInput);
+        return InputView.receivePaymentInput();
+    }
+
+    private List<Lotto> publishLottos(String paymentInput) {
+        List<Lotto> lottos = LottoPublisher.publishLottos(paymentInput);
         OutputView.printLottosOutputMessage(lottos);
+        return lottos;
+    }
 
+    private String getWinningNumbersInput() {
         OutputView.printWinningNumbersInputMessage();
-        String winningNumbersInput = InputView.receiveWinningNumbersInput();
-        List<Integer> winningNumbers = Arrays.stream(winningNumbersInput.split(",")).map(Integer::parseInt).toList();
+        return InputView.receiveWinningNumbersInput();
+    }
+
+    private Lotto constructWinningLotto(String winningNumbersInput) {
+        List<Integer> winningNumbers = parseWinningNumbers(winningNumbersInput);
         LottoValidator.validate(winningNumbers);
-        Lotto winningLotto = new Lotto(winningNumbers);
+        return new Lotto(winningNumbers);
+    }
 
+    private List<Integer> parseWinningNumbers(String winningNumbersInput) {
+        String[] splittedWinningNumbers = winningNumbersInput.split(",");
+        return Arrays.stream(splittedWinningNumbers)
+                .map(Integer::parseInt)
+                .toList();
+    }
+
+    private ResultComputer constructResultComputer(Lotto winningLotto, BonusNumber bonusNumber) {
+        return new ResultComputer(winningLotto, bonusNumber);
+    }
+
+    private String getBonusNumberInput() {
         OutputView.printBonusNumberInputMessage();
-        String bonusNumberInput = InputView.receiveBonusNumberInput();
-        int bonusNumber = Integer.parseInt(bonusNumberInput);
-        BonusNumberValidator.validateBonusNumber(bonusNumber, winningLotto);
+        return InputView.receiveBonusNumberInput();
+    }
 
-        ResultComputer resultComputer = new ResultComputer(winningLotto, new BonusNumber(bonusNumber, winningLotto));
-        TotalResult totalResult = resultComputer.computeResult(lottos);
-        long payment = Long.parseLong(paymentInput);
+    private BonusNumber getBonusNumber(String bonusNumberInput, Lotto winningLotto) {
+        int parsedInput = Integer.parseInt(bonusNumberInput);
+        BonusNumberValidator.validateBonusNumber(parsedInput, winningLotto);
+        return new BonusNumber(parsedInput, winningLotto);
+    }
+
+    private TotalResult getTotalResult(ResultComputer resultComputer, List<Lotto> lottos) {
+        return resultComputer.computeResult(lottos);
+    }
+
+    private int parsePaymentInput(String input) {
+        return Integer.parseInt(input);
+    }
+
+    private void printFinalResult(TotalResult totalResult, int payment) {
         OutputView.printFinalResultMessage(totalResult, payment);
     }
 
-    /*
-
-    당첨 통계
-    ---
-    3개 일치 (5,000원) - 1개
-    4개 일치 (50,000원) - 0개
-    5개 일치 (1,500,000원) - 0개
-    5개 일치, 보너스 볼 일치 (30,000,000원) - 0개
-    6개 일치 (2,000,000,000원) - 0개
-    총 수익률은 62.5%입니다.
-    * */
 }

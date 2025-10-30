@@ -29,7 +29,8 @@ public class OutputView {
     public static void printLottosOutputMessage(List<Lotto> lottos) {
         StringBuilder messageBuilder = new StringBuilder();
         for (Lotto lotto : lottos) {
-            messageBuilder.append(lotto.getNumbers()).append(System.lineSeparator());
+            messageBuilder.append(lotto.getNumbers())
+                    .append(System.lineSeparator());
         }
         println(LOTTOS_OUTPUT_MESSAGE.formatted(lottos.size(), messageBuilder.toString()));
     }
@@ -58,7 +59,8 @@ public class OutputView {
             if (rank.getMatchBonusCount() != 0) {
                 bonusNumberPart = BONUS_NUMBER_MATCHES_MESSAGE;
             }
-            messageBuilder.append(RANK_RESULT_MESSAGE.formatted(rank.getMatchCount(), bonusNumberPart, String.format("%,d", rank.getPrize()), ranks.getOrDefault(rank, 0))).append(System.lineSeparator());
+            messageBuilder.append(RANK_RESULT_MESSAGE.formatted(rank.getMatchCount(), bonusNumberPart, String.format("%,d", rank.getPrize()), ranks.getOrDefault(rank, 0)))
+                    .append(System.lineSeparator());
         }
         return messageBuilder.toString();
 
