@@ -1,5 +1,6 @@
 package lotto.validator;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import lotto.domain.LottoPolicy;
@@ -7,6 +8,17 @@ import lotto.exception.CustomException;
 import lotto.exception.ErrorMessage;
 
 public class LottoValidator {
+    public static void validateNumbersInput(String input) {
+        try {
+            String[] splittedWinningNumbers = input.split(",");
+            Arrays.stream(splittedWinningNumbers)
+                    .forEach(Integer::parseInt);
+        } catch (RuntimeException e) {
+            String message = ErrorMessage.INVALID_INPUT_STRING.format(input);
+            throw new CustomException(message);
+        }
+    }
+
     public static void validate(List<Integer> numbers) {
         validateNumberCount(numbers);
         validateDistinctness(numbers);

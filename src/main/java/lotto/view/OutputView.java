@@ -55,7 +55,8 @@ public class OutputView {
 
     private static String getRankStatisticsMessage(Map<LottoRank, Integer> ranks) {
         StringBuilder messageBuilder = new StringBuilder();
-        for (LottoRank rank : Arrays.stream(LottoRank.values()).toList().reversed()) {
+        final List<LottoRank> ranksInDescOrder = Arrays.stream(LottoRank.values()).toList().reversed();
+        for (LottoRank rank : ranksInDescOrder) {
             String rankResultMessage = getRankResultMessage(ranks, rank);
             messageBuilder.append(rankResultMessage)
                     .append(System.lineSeparator());
@@ -92,7 +93,7 @@ public class OutputView {
         return FINAL_RESULT_MESSAGE.formatted(rankResultMessage, rateOfReturn);
     }
 
-    private static void println(String message) {
+    public static void println(String message) {
         System.out.println(message);
     }
 }

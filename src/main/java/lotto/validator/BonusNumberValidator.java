@@ -6,13 +6,25 @@ import lotto.exception.CustomException;
 import lotto.exception.ErrorMessage;
 
 public class BonusNumberValidator {
-    public static void validateBonusNumber(int bonusNumber, Lotto lotto) {
+    public static void validateBonusNumberInput(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (RuntimeException e) {
+            String message = ErrorMessage.INVALID_INPUT_STRING.format(input);
+            throw new CustomException(message);
+        }
+    }
 
+    public static void validateValue(int bonusNumber, Lotto lotto) {
         if (isDuplicate(bonusNumber, lotto)) {
-            throw new CustomException(ErrorMessage.BONUS_NUMBER_ALREADY_CHOOSED.format(bonusNumber, lotto.getNumbers()));
+            String message = ErrorMessage.BONUS_NUMBER_ALREADY_CHOOSED.format(bonusNumber, lotto.getNumbers());
+            throw new CustomException(message);
         }
         if (hasInvalidRange(bonusNumber)) {
-            throw new CustomException(ErrorMessage.INVALID_RANGE.format(bonusNumber, lotto.getNumbers()));
+            String message = ErrorMessage.INVALID_RANGE.format(
+                    LottoPolicy.MIN_NUMBER, LottoPolicy.MAX_NUMBER, bonusNumber
+            );
+            throw new CustomException(message);
         }
     }
 

@@ -5,17 +5,16 @@ import lotto.exception.CustomException;
 import lotto.exception.ErrorMessage;
 
 public class PaymentValidator {
-
     public static void validatePaymentInput(String input) {
         try {
             Integer.parseInt(input);
-        } catch (IllegalArgumentException e) {
+        } catch (RuntimeException e) {
             String message = ErrorMessage.INVALID_PAYMENT_INPUT.format(LottoPolicy.LOTTO_PRICE, input);
             throw new CustomException(message);
         }
     }
 
-    public static void validateAmountOfPayment(int payment) {
+    public static void validatePaymentValue(int payment) {
         if (!isValidAmount(payment)) {
             String message = ErrorMessage.INVALID_PAYMENT_INPUT.format(LottoPolicy.LOTTO_PRICE, payment);
             throw new CustomException(message);
