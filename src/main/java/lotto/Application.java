@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import lotto.domain.BonusNumber;
 import lotto.domain.Lotto;
+import lotto.domain.Payment;
 import lotto.domain.TotalResult;
 import lotto.service.LottoPublisher;
 import lotto.service.ResultComputer;
@@ -20,17 +21,17 @@ public class Application {
 
     private void run() {
         String paymentInput = getPaymentInput();
-        List<Lotto> lottos = publishLottos(paymentInput);
+        Payment payment = new Payment(paymentInput);
+        List<Lotto> lottos = publishLottos(payment);
 
         String winningNumbersInput = getWinningNumbersInput();
         Lotto winningLotto = constructWinningLotto(winningNumbersInput);
 
         String bonusNumberInput = getBonusNumberInput();
-        BonusNumber bonusNumber = getBonusNumber(bonusNumberInput, winningLotto);
+        BonusNumber bonusNumber = constructBonusNumber(bonusNumberInput, winningLotto);
         ResultComputer resultComputer = constructResultComputer(winningLotto, bonusNumber);
 
         TotalResult totalResult = getTotalResult(resultComputer, lottos);
-        int payment = parsePaymentInput(paymentInput);
         printFinalResult(totalResult, payment);
     }
 
@@ -39,8 +40,8 @@ public class Application {
         return InputView.receivePaymentInput();
     }
 
-    private List<Lotto> publishLottos(String paymentInput) {
-        List<Lotto> lottos = LottoPublisher.publishLottos(paymentInput);
+    private List<Lotto> publishLottos(Payment payment) {
+        List<Lotto> lottos = LottoPublisher.publishLottos(payment);
         OutputView.printLottosOutputMessage(lottos);
         return lottos;
     }
@@ -72,7 +73,7 @@ public class Application {
         return InputView.receiveBonusNumberInput();
     }
 
-    private BonusNumber getBonusNumber(String bonusNumberInput, Lotto winningLotto) {
+    private BonusNumber constructBonusNumber(String bonusNumberInput, Lotto winningLotto) {
         int parsedInput = Integer.parseInt(bonusNumberInput);
         BonusNumberValidator.validateBonusNumber(parsedInput, winningLotto);
         return new BonusNumber(parsedInput, winningLotto);
@@ -82,11 +83,7 @@ public class Application {
         return resultComputer.computeResult(lottos);
     }
 
-    private int parsePaymentInput(String input) {
-        return Integer.parseInt(input);
-    }
-
-    private void printFinalResult(TotalResult totalResult, int payment) {
+    private void printFinalResult(TotalResult totalResult, Payment payment) {
         OutputView.printFinalResultMessage(totalResult, payment);
     }
 

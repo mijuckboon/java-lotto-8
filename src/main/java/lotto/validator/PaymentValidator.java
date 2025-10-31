@@ -4,7 +4,7 @@ import lotto.domain.LottoPolicy;
 import lotto.exception.CustomException;
 import lotto.exception.ErrorMessage;
 
-public class InputValidator {
+public class PaymentValidator {
 
     public static void validatePaymentInput(String input) {
         try {

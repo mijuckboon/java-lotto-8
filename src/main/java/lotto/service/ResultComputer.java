@@ -26,11 +26,10 @@ public class ResultComputer {
     }
 
     private LottoResult computeResult(Lotto lotto) {
-        List<Integer> correctNumbers = lotto.getNumbers().stream().filter(
-                number -> winningLotto.getNumbers().contains(number)
-        ).toList();
+        List<Integer> selectedNumbers = lotto.getNumbers();
+        List<Integer> correctNumbers = filterCorrectNumbers(selectedNumbers);
         int matchCount = correctNumbers.size();
-        int matchBonusCount = lotto.getNumbers().stream().filter(number -> number == bonusNumber.getNumber()).toList()
+        int matchBonusCount = selectedNumbers.stream().filter(number -> number == bonusNumber.getNumber()).toList()
                 .size();
 
         for (LottoRank rank : LottoRank.values()) {
@@ -39,5 +38,11 @@ public class ResultComputer {
             }
         }
         return new LottoResult(null);
+    }
+
+    private List<Integer> filterCorrectNumbers(List<Integer> selectedNumbers) {
+        return selectedNumbers.stream().filter(
+                number -> winningLotto.getNumbers().contains(number)
+        ).toList();
     }
 }

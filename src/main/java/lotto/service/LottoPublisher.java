@@ -5,13 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import lotto.domain.Lotto;
 import lotto.domain.LottoPolicy;
-import lotto.validator.InputValidator;
+import lotto.domain.Payment;
 
 public class LottoPublisher {
-    public static List<Lotto> publishLottos(String input) {
-        int payment = parsePaymentInput(input);
-        InputValidator.validateAmountOfPayment(payment);
-        int lottoAmount = computeLottoAmount(payment);
+    public static List<Lotto> publishLottos(Payment payment) {
+        int lottoAmount = payment.getLottoAmount();
         return publishLottosWithAmount(lottoAmount);
     }
 
@@ -21,15 +19,6 @@ public class LottoPublisher {
             lottos.add(publishLotto());
         }
         return lottos;
-    }
-
-    private static int computeLottoAmount(int payment) {
-        return payment / LottoPolicy.LOTTO_PRICE;
-    }
-
-    private static int parsePaymentInput(String input) {
-        InputValidator.validatePaymentInput(input);
-        return Integer.parseInt(input);
     }
 
     private static Lotto publishLotto() {

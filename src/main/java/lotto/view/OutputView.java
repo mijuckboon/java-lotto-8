@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import lotto.domain.Lotto;
 import lotto.domain.LottoRank;
+import lotto.domain.Payment;
 import lotto.domain.TotalResult;
 
 public class OutputView {
@@ -43,27 +44,52 @@ public class OutputView {
         println(BONUS_NUMBER_INPUT_MESSAGE);
     }
 
-    public static void printFinalResultMessage(TotalResult totalResult, int payment) {
+    public static void printFinalResultMessage(TotalResult totalResult, Payment payment) {
         Map<LottoRank, Integer> ranks = totalResult.getRanks();
         double rateOfReturn = totalResult.getRateOfReturn(payment);
 
-        String rankResultMessage = getRankResultMessage(ranks);
-        String finalResultMessage = FINAL_RESULT_MESSAGE.formatted(rankResultMessage, rateOfReturn);
+        String rankStatisticsMessage = getRankStatisticsMessage(ranks);
+        String finalResultMessage = getFinalResultMessage(rankStatisticsMessage, rateOfReturn);
         println(finalResultMessage);
     }
 
-    private static String getRankResultMessage(Map<LottoRank, Integer> ranks) {
+    private static String getRankStatisticsMessage(Map<LottoRank, Integer> ranks) {
         StringBuilder messageBuilder = new StringBuilder();
         for (LottoRank rank : Arrays.stream(LottoRank.values()).toList().reversed()) {
-            String bonusNumberPart = "";
-            if (rank.getMatchBonusCount() != 0) {
-                bonusNumberPart = BONUS_NUMBER_MATCHES_MESSAGE;
-            }
-            messageBuilder.append(RANK_RESULT_MESSAGE.formatted(rank.getMatchCount(), bonusNumberPart, String.format("%,d", rank.getPrize()), ranks.getOrDefault(rank, 0)))
+            String rankResultMessage = getRankResultMessage(ranks, rank);
+            messageBuilder.append(rankResultMessage)
                     .append(System.lineSeparator());
         }
         return messageBuilder.toString();
+    }
 
+    private static String getRankResultMessage(Map<LottoRank, Integer> lottoRanks, LottoRank lottoRank) {
+        int matchCount = lottoRank.getMatchCount();
+        String bonusNumberPart = getBonusNumberPartMessage(lottoRank);
+        String formattedPrize = getFormattedPrize(lottoRank);
+        int countOfLottoRank = getCountOfLottoRank(lottoRanks, lottoRank);
+        return RANK_RESULT_MESSAGE.formatted(
+                matchCount, bonusNumberPart, formattedPrize, countOfLottoRank
+        );
+    }
+
+    private static String getBonusNumberPartMessage(LottoRank lottoRank) {
+        if (lottoRank.getMatchBonusCount() != 0) {
+            return BONUS_NUMBER_MATCHES_MESSAGE;
+        }
+        return "";
+    }
+
+    private static String getFormattedPrize(LottoRank lottoRank) {
+        return String.format("%,d", lottoRank.getPrize()); // 세 자리마다 , 포시
+    }
+
+    private static int getCountOfLottoRank(Map<LottoRank, Integer> lottoRanks, LottoRank lottoRank) {
+        return lottoRanks.getOrDefault(lottoRank, 0);
+    }
+
+    private static String getFinalResultMessage(String rankResultMessage, double rateOfReturn) {
+        return FINAL_RESULT_MESSAGE.formatted(rankResultMessage, rateOfReturn);
     }
 
     private static void println(String message) {

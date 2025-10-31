@@ -36,7 +36,7 @@ public class TotalResult {
         return totalGain;
     }
 
-    public double getRateOfReturn(long payment) {
-        return (double) getTotalGain() / payment * PERCENT_MULTIPLIER;
+    public double getRateOfReturn(Payment payment) {
+        return (double) getTotalGain() / payment.getAmount() * PERCENT_MULTIPLIER;
     }
 }
