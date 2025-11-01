@@ -4,6 +4,9 @@ import lotto.exception.CustomException;
 import lotto.exception.ErrorMessage;
 import lotto.validator.PaymentValidator;
 
+/**
+ * 지불 금액 래퍼 클래스
+ */
 public class Payment {
     int amount;
 
@@ -28,6 +31,10 @@ public class Payment {
         return amount;
     }
 
+    /**
+     * 지불 금액을 입력받아 로또 발행 개수를 반환하는 메서드
+     * @return 로또 발행 개수
+     */
     public int getLottoAmount() {
         return amount / LottoPolicy.LOTTO_PRICE;
     }

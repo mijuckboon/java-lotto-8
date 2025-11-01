@@ -1,5 +1,8 @@
 package lotto.domain;
 
+/**
+ * 로또 등수 enum 클래스
+ */
 public enum LottoRank {
     FIRST(1,2_000_000_000, 6, 0),
     SECOND(2, 30_000_000, 5, 1),

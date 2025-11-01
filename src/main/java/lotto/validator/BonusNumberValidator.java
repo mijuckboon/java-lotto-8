@@ -5,7 +5,14 @@ import lotto.domain.LottoPolicy;
 import lotto.exception.CustomException;
 import lotto.exception.ErrorMessage;
 
+/**
+ * BousNumber 유효성 검사 클래스
+ */
 public class BonusNumberValidator {
+    /**
+     * BonusNumber 생성을 위한 문자열 파싱 검증 메서드
+     * @param input 입력 문자열
+     */
     public static void validateBonusNumberInput(String input) {
         try {
             Integer.parseInt(input);
@@ -15,6 +22,11 @@ public class BonusNumberValidator {
         }
     }
 
+    /**
+     * BonusNumber의 값이 유효한지 검증하는 메서드
+     * @param bonusNumber 보너스 번호 값
+     * @param lotto 로또 객체
+     */
     public static void validateValue(int bonusNumber, Lotto lotto) {
         if (isDuplicate(bonusNumber, lotto)) {
             String message = ErrorMessage.BONUS_NUMBER_ALREADY_CHOOSED.format(bonusNumber, lotto.getNumbers());

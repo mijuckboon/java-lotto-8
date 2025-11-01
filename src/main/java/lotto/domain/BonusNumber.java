@@ -2,6 +2,9 @@ package lotto.domain;
 
 import lotto.validator.BonusNumberValidator;
 
+/**
+ * 보너스 번호 래퍼 클래스
+ */
 public class BonusNumber {
     int number;
 

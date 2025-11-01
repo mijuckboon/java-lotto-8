@@ -8,6 +8,9 @@ import lotto.domain.LottoRank;
 import lotto.domain.Payment;
 import lotto.domain.TotalResult;
 
+/**
+ * 문자열 출력 클래스
+ */
 public class OutputView {
     private static final String PAYMENT_INPUT_MESSAGE = "구입금액을 입력해 주세요.";
     private static final String LOTTOS_OUTPUT_MESSAGE = """

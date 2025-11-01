@@ -4,7 +4,14 @@ import lotto.domain.LottoPolicy;
 import lotto.exception.CustomException;
 import lotto.exception.ErrorMessage;
 
+/**
+ * 지불 금액 검증 클래스
+ */
 public class PaymentValidator {
+    /**
+     * Payment 생성을 위한 입력 문자열 파싱 검증 메서드
+     * @param input 입력 문자열
+     */
     public static void validatePaymentInput(String input) {
         try {
             Integer.parseInt(input);
@@ -14,6 +21,10 @@ public class PaymentValidator {
         }
     }
 
+    /**
+     * 지불 금액 값 검증 메서드
+     * @param payment 지불 금액
+     */
     public static void validatePaymentValue(int payment) {
         if (!isValidAmount(payment)) {
             String message = ErrorMessage.INVALID_PAYMENT_INPUT.format(LottoPolicy.LOTTO_PRICE, payment);

@@ -1,5 +1,8 @@
 package lotto.domain;
 
+/**
+ * 로또 진행 규칙에 관한 상수 클래스
+ */
 public class LottoPolicy {
     public static final int MIN_NUMBER = 1;
     public static final int MAX_NUMBER = 45;

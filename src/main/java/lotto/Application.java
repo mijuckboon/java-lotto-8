@@ -7,19 +7,25 @@ import lotto.domain.Lotto;
 import lotto.domain.Payment;
 import lotto.domain.TotalResult;
 import lotto.exception.CustomException;
-import lotto.exception.ErrorMessage;
 import lotto.service.LottoPublisher;
 import lotto.service.ResultComputer;
 import lotto.validator.LottoValidator;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
+/**
+ * 로또 프로그램의 진입점 클래스
+ */
 public class Application {
     public static void main(String[] args) {
         Application application = new Application();
         application.run();
     }
 
+    /**
+     * 프로그램 실행 메서드
+     * Payment, 당첨 번호, 보너스 번호를 입력받아 결과를 출력한다.
+     */
     private void run() {
         Payment payment = constructPayment();
         List<Lotto> lottos = publishLottos(payment);
@@ -114,7 +120,7 @@ public class Application {
     }
 
     private TotalResult getTotalResult(ResultComputer resultComputer, List<Lotto> lottos) {
-        return resultComputer.computeResult(lottos);
+        return resultComputer.computeTotalResult(lottos);
     }
 
     private void printFinalResult(TotalResult totalResult, Payment payment) {

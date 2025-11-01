@@ -7,7 +7,15 @@ import lotto.domain.Lotto;
 import lotto.domain.LottoPolicy;
 import lotto.domain.Payment;
 
+/**
+ * 로또 발행을 담당하는 클래스
+ */
 public class LottoPublisher {
+    /**
+     * 지불 금액을 입력받아 로또를 발행하는 메서드
+     * @param payment 지불 금액 객체
+     * @return 발행한 로또 목록
+     */
     public static List<Lotto> publishLottos(Payment payment) {
         int lottoAmount = payment.getLottoAmount();
         return publishLottosWithAmount(lottoAmount);

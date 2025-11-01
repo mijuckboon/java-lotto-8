@@ -7,7 +7,14 @@ import lotto.domain.LottoPolicy;
 import lotto.exception.CustomException;
 import lotto.exception.ErrorMessage;
 
+/**
+ * 로또 유효성 검증 클래스
+ */
 public class LottoValidator {
+    /**
+     * Lotto 생성을 위한 문자열 파싱 검증 메서드
+     * @param input 입력 문자열
+     */
     public static void validateNumbersInput(String input) {
         try {
             String[] splittedWinningNumbers = input.split(",");
@@ -19,6 +26,10 @@ public class LottoValidator {
         }
     }
 
+    /**
+     * Lotto 생성을 위한 숫자 목록 검증 메서드
+     * @param numbers 로또 숫자 목록
+     */
     public static void validate(List<Integer> numbers) {
         validateNumberCount(numbers);
         validateDistinctness(numbers);
