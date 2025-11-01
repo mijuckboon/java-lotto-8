@@ -18,7 +18,7 @@ public class OutputView {
             %s""";
     private static final String WINNING_NUMBERS_INPUT_MESSAGE = "당첨 번호를 입력해 주세요.";
     private static final String BONUS_NUMBER_INPUT_MESSAGE = "보너스 번호를 입력해 주세요.";
-    private static final String FINAL_RESULT_MESSAGE = """
+    private static final String TOTAL_RESULT_MESSAGE = """
             당첨 통계
             ---
             %s
@@ -93,7 +93,7 @@ public class OutputView {
     }
 
     private static String getFinalResultMessage(String rankResultMessage, double rateOfReturn) {
-        return FINAL_RESULT_MESSAGE.formatted(rankResultMessage, rateOfReturn);
+        return TOTAL_RESULT_MESSAGE.formatted(rankResultMessage, rateOfReturn);
     }
 
     public static void println(String message) {
