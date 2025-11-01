@@ -41,10 +41,9 @@ public class ResultComputer {
     }
 
     private int computeMatchBonusCount(List<Integer> selectedNumbers, int bonusNumberValue) {
-        return selectedNumbers.stream()
+        return (int) selectedNumbers.stream()
                 .filter(number -> number == bonusNumberValue)
-                .toList()
-                .size();
+                .count();
     }
 
     private LottoResult constructLottoResult(int targetMatchCount, int targetMatchBonusCount) {
@@ -58,8 +57,9 @@ public class ResultComputer {
 
     private boolean isMatched(LottoRank rank, int targetMatchCount, int targetMatchBonusCount) {
         int matchCount = rank.getMatchCount();
-        int matchBonusCount = rank.getMatchBonusCount();
-        return matchCount == targetMatchCount && matchBonusCount == targetMatchBonusCount;
+        int requiredMatchBonusCount = rank.getMatchBonusCount();
+        return matchCount == targetMatchCount &&
+                requiredMatchBonusCount <= targetMatchBonusCount;
     }
 
     private List<Integer> filterCorrectNumbers(List<Integer> selectedNumbers) {
