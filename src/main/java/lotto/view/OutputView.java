@@ -48,12 +48,16 @@ public class OutputView {
     }
 
     public static void printFinalResultMessage(TotalResult totalResult, Payment payment) {
+        String finalResultMessage = getFinalResultMessage(totalResult, payment);
+        println(finalResultMessage);
+    }
+
+    public static String getFinalResultMessage(TotalResult totalResult, Payment payment) {
         Map<LottoRank, Integer> ranks = totalResult.getRanks();
         double rateOfReturn = totalResult.getRateOfReturn(payment);
 
         String rankStatisticsMessage = getRankStatisticsMessage(ranks);
-        String finalResultMessage = getFinalResultMessage(rankStatisticsMessage, rateOfReturn);
-        println(finalResultMessage);
+        return getFinalResultMessage(rankStatisticsMessage, rateOfReturn);
     }
 
     private static String getRankStatisticsMessage(Map<LottoRank, Integer> ranks) {
